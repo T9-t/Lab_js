@@ -116,6 +116,7 @@ function callback () {
   console.log('It is done!') 
 } 
 
+
 ///////////////////////////
 
 console.log('start')
@@ -132,17 +133,27 @@ console.log('end')
 
 ///////////////////////////
 
+let i = 0;
+
 console.log('start');
-showInfo();
+notif();
 console.log('end');
 
+function notif() {
 
-async function showInfo() {
-
-  await new Promise((resolve) => { readConfig('myConfig', resolve); });
-  await new Promise((resolve) => { doQuery('select * from cities', resolve); });
-  await new Promise((resolve) => { httpGet('http://google.com', resolve); });
-  await new Promise((resolve) => { readFile('README.md', resolve); });
+  if (i == 0) {
+    readConfig('myConfig', notif);
+  }
+  if (i == 1) {
+    doQuery('select * from cities', notif);
+  }
+  if (i == 2) {
+    httpGet('http://google.com', notif);
+  }
+  if (i == 3) {
+    readFile('README.md', callback);
+  }
+  i++;
 }
 
 
@@ -150,29 +161,42 @@ async function showInfo() {
 
 ////// 3
 
-// f1(x) = -x, f2(x)= 5, f3(x)= x^2, f4(x)= x^3, f5(x)= -10, f6(x)= 4x 
+let finalSum = 0;
+let j = 0;
+let x = 2;
+let n = 4;
+
 let functions = [
 
-  async function f1(x) { return -1 * x},
-  async function f2() { return 5},
-  async function f3(x) { return x ** 2},
-  async function f4(x) { return x ** 3},
-  async function f5() { return -10},
-  async function f6(x) { return 4 * x}
+  (x) => { return -1 * x}, //f1
+  () => { return 5}, //f2
+  (x) => { return x ** 2}, //f3
+  (x) => { return x ** 3}, //f4
+  () => { return -10}, //f5
+  (x) => { return 4 * x} //f6
 ];
 
-calculateFunction(2, 6, functions);
+calculateFunction();
 
-async function calculateFunction(x, n, functionsList) {
+async function calculateFunction() {
   
-  let finalSum = 0;
-
-  for (let i = 0; i < n; i++) {
-
-    let func = await functionsList[i](x);
-    finalSum += func;
-
-    console.log("f" + (i + 1) + " дает значение " + func + ", промежуточный результат " + finalSum);
+  if (j < n) {
+    showCalculete(functions[j]);
   }
-  console.log("Таким образом, ответ для F(x):" + finalSum);
+  if (j == n){
+    console.log("Таким образом, ответ для F(x):" + finalSum);
+  }
+}
+
+function showCalculete(func) { 
+  setTimeout(() => { 
+
+    let funcValue = func(x);
+    finalSum += funcValue;
+
+    console.log("f" + (j + 1) + " дает значение " + funcValue + ", промежуточный результат " + finalSum);
+
+    j++;
+    calculateFunction();
+  }, Math.floor(Math.random() * 1000))
 }
