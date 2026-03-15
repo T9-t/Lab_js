@@ -178,7 +178,7 @@ let functions = [
 
 calculateFunction();
 
-async function calculateFunction() {
+function calculateFunction() {
   
   if (j < n) {
     showCalculete(functions[j]);
