@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Задание 1 -->
+    <script type="module">
+        //a
+        let x = Number(prompt("Введите x", ));
+        alert("sin(x) = " + Math.sin(x));
+
+
+        //b
+        let square = [2, 1, -2, -2];
+        x = Number(prompt("Введите координату по x", ));
+        let y = Number(prompt("Введите координату по y", ));
+
+        let xMax = Math.max(square[0], square[2]);
+        let xMin = Math.min(square[0], square[2]);
+
+        let yMax = Math.max(square[1], square[3]);
+        let yMin = Math.min(square[1], square[3]);
+
+        if (x <= xMax && xMin <= x && y <= yMax && yMin <= y) {
+            alert("Входит в квадрат");
+        } else {
+            alert("Не входит в квадрат");
+        }
+        
+
+        //c
+        let number = Number(prompt("Введите натуральное число", ));
+        let isSquare = false;
+
+        if (2 <= number) {
+            for (let a = 1; a**2 < number; a++) {
+
+                let bSquare = number - a**2;
+                let b = Math.sqrt(bSquare);
+
+                if (Number.isInteger(b) && b != 0) {
+                    isSquare = true;
+                    break;
+                }
+            }
+        }
+        if (isSquare) {
+            alert("Можно представить в виде суммы двух квадратов натуральных чисел");
+        
+        } else {
+            alert("Нельзя представить в виде суммы двух квадратов натуральных чисел");
+        }
+        
+        
+        //d
+        let email = prompt("Введите адрес электронной почты", );
+
+        if (!email.includes("@")) {
+            alert("Адрес не содержит символ @");
+        }
+        
+
+        //e
+        let s = prompt("Введите строку", );
+        let charCount = 0;
+        
+        for (let char of s) {
+
+            let charNumber = char.toLowerCase().charCodeAt(0);
+            
+            if (charNumber >= 97 && charNumber <= 122) {
+                charCount++;
+            }
+        }
+        let percent = (charCount * 100) / s.length;
+        alert("Доля символов, являющихся буквами латинского алфавита: " + percent + "%");
+        
+
+        //f
+        s = prompt("Введите строку", ).split(/\s+/);
+        let unique = Array.from(new Set(s));
+
+        alert(unique.join(" "));
+        
+
+        //g
+        let n = Number(prompt("Введите длину массива", ));
+        let str = "";
+
+        let array = Array.from({length: n}, () => Math.floor(Math.random() * 100));
+        alert(array);
+
+        array.reverse();
+        
+        for (let i = 0; i < array.length; i += 5) {
+
+            str += array.slice(i, i + 5).join(" ") + "\n";
+        }
+        alert(str);
+        
+
+        //h
+        n = Number(prompt("Введите длину стороны квадратной матрицы", ));
+        let arr = Array.from({length: n}, () => 
+                            Array.from({length: n}, () => Math.floor(Math.random() * 100)));
+
+        let diagonals = [];
+        for (let i = 0; i < n; i++) {
+
+            diagonals.push(arr[i][i]);
+            diagonals.push(arr[i][n - 1 - i]);
+        }
+        let max = Math.max(...diagonals);
+        let min = Math.min(...diagonals);
+
+        for (let i = 0; i < n; i++) {
+            
+            if (arr[i][i] != max && arr[i][i] != min) {
+                arr[i][i] = 0;
+            }
+            if (arr[i][n - 1 - i] != max && arr[i][n - 1 - i] != min) {
+                arr[i][n - 1 - i] = 0;
+            }
+        }
+        console.table(arr);
+        
+      
+        //i
+        let daysCount = Number(prompt("Введите количество дней которое будет прибавленно к текущей дате", ));
+        let dateToday = new Date();
+        
+        dateToday.setDate(dateToday.getDate() + daysCount);
+        alert(dateToday);
+
+
+        //j
+        dateToday = new Date();
+        let dateStrng = "-09-01";
+        let year = dateToday.getFullYear();
+
+        if (dateToday.getMonth() > 8) {
+            dateStrng = (year + 1).toString() + dateStrng;
+
+        } else { 
+            dateStrng = (year).toString() + dateStrng;
+        }
+        let september = new Date(dateStrng);
+
+        let months = (september.getFullYear() - year) * 12;
+        months += september.getMonth() - dateToday.getMonth();
+
+        alert(months);
+    </script>
+
+    <!-- Задание 2 -->
+
+    <!-- Вероника -- 8 букв -->
+    <!-- Просветова -- 10 букв -->
+
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>1:1</td><td>1:2</td><td>1:3</td><td>1:4</td><td>1:5</td>
+                <td>1:6</td><td>1:7</td><td>1:8</td><td>1:9</td><td>1:10</td>
+            </tr>
+            <tr>
+                <td>2:1</td><td>2:2</td><td>2:3</td><td>2:4</td><td>2:5</td>
+                <td>2:6</td><td>2:7</td><td>2:8</td><td>2:9</td><td>2:10</td>
+            </tr>
+            <tr>
+                <td>3:1</td><td>3:2</td><td>3:3</td><td>3:4</td><td>3:5</td>
+                <td>3:6</td><td>3:7</td><td>3:8</td><td>3:9</td><td>3:10</td>
+            </tr>
+            <tr>
+                <td>4:1</td><td>4:2</td><td>4:3</td><td>4:4</td><td>4:5</td>
+                <td>4:6</td><td>4:7</td><td>4:8</td><td>4:9</td><td>4:10</td>
+            </tr>
+            <tr>
+                <td>5:1</td><td>5:2</td><td>5:3</td><td>5:4</td><td>5:5</td>
+                <td>5:6</td><td>5:7</td><td>5:8</td><td>5:9</td><td>5:10</td>
+            </tr>
+            <tr>
+                <td>6:1</td><td>6:2</td><td>6:3</td><td>6:4</td><td>6:5</td>
+                <td>6:6</td><td>6:7</td><td>6:8</td><td>6:9</td><td>6:10</td>
+            </tr>
+            <tr>
+                <td>7:1</td><td>7:2</td><td>7:3</td><td>7:4</td><td>7:5</td>
+                <td>7:6</td><td>7:7</td><td>7:8</td><td>7:9</td><td>7:10</td>
+            </tr>
+            <tr>
+                <td>8:1</td><td>8:2</td><td>8:3</td><td>8:4</td><td>8:5</td>
+                <td>8:6</td><td>8:7</td><td>8:8</td><td>8:9</td><td>8:10</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Задание 3 
+
+        <html> 
+        <body> 
+            <div>Пользователи:</div> 
+            <ul> 
+                <li>Джон</li> 
+                <li>Пит</li> 
+            </ul> 
+        </body> 
+        </html>
+
+        Элемент <div>:
+        let div = document.querySelector("div");
+
+        Элемент <ul>:
+        let ul = document.querySelector("ul");
+
+        Второй <li> (с именем Пит):
+        let li = document.querySelectorAll("li")[1];
+    -->
+
+    <!-- Задание 4
+
+        Таблица с id="age-table".
+        let table = document.getElementById("age-table");
+
+        Все элементы label внутри этой таблицы (их три).
+        let labels = table.querySelectorAll("label");
+
+        Первый td в этой таблице (со словом «Age»).
+        let firstTd = table.querySelector("td");
+
+        Форму form с именем name="search".
+        let form = document.form.search;
+
+        
+        let inputs = form.querySelectorAll('input');
+
+        Первый input в этой форме.
+        let firstInput = inputs[0];
+
+        Последний input в этой форме.
+        let lastInput = inputs[inputs.length - 1];
+    -->
+
+    <!-- Задание 5 -->
+
+    <script type="module">
+        let table = document.querySelector("table");
+        let cells = table.querySelectorAll("td");
+
+        cells.forEach(element => {
+            
+            let str = element.textContent.split(":");
+
+            if ((Number(str[0]) + Number(str[1])) % 2 == 0) {
+                element.style.backgroundColor = "red";
+            }
+        });
+    </script>
+
+    <!-- Задание 6 -->
+
+    <a name="list">the list:</a> 
+    <ul> 
+        <li><a href="http://google.com">http://google.com</a></li> 
+        <li><a href="/tutorial">/tutorial.html</a></li> 
+        <li><a href="local/path">local/path</a></li> 
+        <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li> 
+        <li><a href="http://nodejs.org">http://nodejs.org</a></li> 
+        <li><a href="http://internal.com/test">http://internal.com/test</a></li> 
+    </ul> 
+    
+    <script type="module">
+        let li = document.querySelectorAll("li");
+
+        li.forEach(element => {
+            
+            let url = element.querySelector("a").textContent;
+
+            if (url.includes("://") && !url.startsWith("http://internal.com")) {
+                element.querySelector("a").style.color = "orange";
+            }
+        });
+    </script> 
+
+    <!-- Задание 7 -->
+
+    <ol id="list">
+        <li>Привет</li> 
+        <li>Мир</li> 
+    </ol>
+
+    <script type="module">
+        function clear(elem) {
+            elem.innerHTML = "";
+        } 
+        clear(list);
+    </script> 
+    
+    <!-- Задание 8 -->
+
+    <script type="module">
+        let ul = document.createElement("ul");
+        document.body.appendChild(ul);
+
+        let N = Number(prompt("Количество пунктов в списке", ));
+
+        for (let i = 0; i < N; i++) {
+
+            let content = prompt("Содержимое пункта №" + (i + 1), );
+            
+            let li = document.createElement("li");
+            li.textContent = content;
+
+            ul.appendChild(li);
+        }
+    </script>
+</body>
+</html>

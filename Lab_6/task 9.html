@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="style.css">
+    <title>Лицемер (с)</title>
+</head>
+<body>
+    <!-- Задание a
+    <script>
+        let main = document.createElement("main");
+        main.classList.add("content");
+
+        let section = document.createElement("section");
+
+
+        let divHeader = document.createElement("div");
+        divHeader.classList.add("header-d");
+        divHeader.textContent = "Выберите лицо, которое нравится вам больше остальных:";
+
+        let divDisplay = document.createElement("div");
+        divDisplay.classList.add("display");
+
+        let divCard = document.createElement("div");
+        divCard.classList.add("card");
+        
+        let divDescription = document.createElement("div");
+        divDescription.classList.add("description");
+
+
+        let img = document.createElement("img");
+        img.src = "https://thispersondoesnotexist.com";
+        img.alt = "Avatar";
+
+        let p = document.createElement("p");
+        p.textContent = "Персона номер 1";
+
+
+        divDescription.appendChild(p);
+
+        divCard.appendChild(img);
+        divCard.appendChild(divDescription);
+
+        divDisplay.appendChild(divCard);
+
+        section.appendChild(divHeader);
+        section.appendChild(divDisplay);
+
+        main.appendChild(document.createElement("aside"));
+        main.appendChild(section);
+
+        document.body.appendChild(document.createElement("header"));
+        document.body.appendChild(main);
+
+    </script>
+    -->
+
+    <!-- Задание b, c -->
+    <header></header>
+    <main class="content">
+        <aside></aside>
+        <section>
+            <div class="header-d">
+                Выберите лицо, которое нравится вам больше остальных:
+            </div>
+            <div class="display"></div>
+        </section>
+    </main>
+    
+    <script>
+        let divDisplay = document.querySelector(".display");
+
+        let intervalID = window.setInterval(createCard, 2000);
+        let cardCount = 0;
+
+        function createCard() {
+            cardCount++;
+
+            let divCard = document.createElement("div");
+            divCard.classList.add("card");
+
+
+            let img = document.createElement("img");
+            img.src = "https://thispersondoesnotexist.com" + "/?" + cardCount;
+            img.alt = "Avatar";
+
+            let divDescription = document.createElement("div");
+            divDescription.classList.add("description");
+
+            let p = document.createElement("p");
+            p.textContent = randomName();
+
+            divDescription.appendChild(p);
+        
+            divCard.appendChild(img);
+            divCard.appendChild(divDescription);
+
+            divDisplay.appendChild(divCard);
+
+            if (cardCount == 6) {
+                stopCreateCard();
+            }
+        }
+
+        function stopCreateCard() {
+            clearInterval(intervalID);
+        }
+
+        function randomName() {
+
+            let names = ["Алексей", "Дмитрий", "Иван", "Мария", "Ольга", "Елена"];
+            let surnames = ["Иванов", "Петров", "Сидоров", "Смирнова", "Кузнецова"];
+
+            let randomName = names[Math.floor(Math.random() * names.length)];
+            let randomSurname = surnames[Math.floor(Math.random() * surnames.length)];
+
+            return randomName + " " + randomSurname;
+        }  
+    </script>
+</body>
+</html>
