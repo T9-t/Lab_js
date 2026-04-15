@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просветова Вероника</title>
+</head>
+<body>
+    <h3>Введите начисленную зарплату за следующие месяцы</h3>
+   
+    <div>Январь: <input value="300"></input> </div> <br>
+    <div>Февраль: <input value="200"></input> </div> <br>
+    <div>Март: <input value="500"></input> </div> <br>
+    <div>Апрель: <input value="250"></input> </div> <br>
+    <div>Май: <input value="350"></input> </div> <br>
+    <div>Июнь: <input value="500"></input> </div> <br>
+
+    <h3>Средняя зарплата: <input id="average"></input></h3>
+    <button onclick="average()">Вычислить</button>
+
+    <script>
+        let inputs = document.querySelectorAll("input:not(#average)");
+        let inputAverage = document.getElementById("average");
+        let sum = 0;
+
+        function average() {
+            inputs.forEach(element => {
+                sum += Number(element.value);
+            });
+            inputAverage.value = sum / 6;
+            sum = 0;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Задание 1 -->
+    <div id="text">Этот текст исчезнет при нажатии кнопки.</div>
+    <button onclick="hideElement()">Скрыть текст</button>
+
+    <!-- Задание 2 -->
+    <button id="button" onclick="hideButton()">Скрыть кнопку</button>
+
+    <!-- Задание 3 -->
+    <div id="coordenades"></div>
+
+    <!-- Задание 5 -->
+    <input type="text" onchange="changeText()"></input>
+
+
+    <script>
+        //1
+        function hideElement() {
+            document.getElementById("text").style.display = "none";
+        }
+
+        //2
+        function hideButton() {
+            document.getElementById("button").style.display = "none";
+        }
+
+        //3
+        let сoordenadesDiv = document.getElementById("coordenades");
+        сoordenadesDiv.style.whiteSpace = "pre-line";
+
+        document.addEventListener("click", (click) => {
+            сoordenadesDiv.textContent += `координаты по Х: ${click.clientX}, координаты по Y: ${click.clientY}\n`
+        });
+
+        //4
+        document.onclick = function() {alert("Был щелчок!")};
+
+        //5
+        function changeText() {
+            alert("Текст был изменен!!!");
+        }
+    </script>
+</body>
+</html>

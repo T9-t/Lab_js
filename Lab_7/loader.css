@@ -1,0 +1,18 @@
+.centerPosition {
+    flex-direction: column; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;
+}
+.loaderContainer {
+    width: 30%;
+    background-color: #cfcfcf;
+    border-radius: 10px;
+}
+.loaderProgress {
+    width: 0%;
+    height: 30px;
+    background-color: #5987c4;
+    border-radius: 10px;
+}

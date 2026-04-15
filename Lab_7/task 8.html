@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="loader.css">
+    <title>Регистрация на сайте</title> 
+</head>
+<body>
+    <section id="loader">
+        <div class="centerPosition">
+            <div class="loaderContainer">
+                <div id="progress" class="loaderProgress"></div>
+            </div>
+            <div>Страница загружается...</div>
+        </div>
+    </section>
+    <script src="loader.js" defer></script>
+
+    <main style="display: none;">
+        <div>
+            <section id="frame_1" class="centerPosition">
+                <h1>Добро пожаловать!</h1>
+                <button onclick="nextWindow()">Регистрация</button>
+            </section>
+
+            <section id="frame_2" style="display: none;">
+
+                <h3>Шаг 1. Персональные данные</h3> <br>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="name">Имя:</label> <br>
+                            <input id="name" onchange="checkInfo()"></input>
+                        </td>
+
+                        <td>
+                            <label for="last_name">Фамилия:</label> <br>
+                            <input id="last_name" onchange="checkInfo()"></input>
+                        </td>
+                    </tr>
+                </table> <br>
+
+                <label for="mail">Электронная почта:</label> <br>
+                <input id="mail" onchange="checkInfo()"></input> <br>
+
+                <table>
+                    <tr>
+                        <td>
+                            <label for="country_input">Страна:</label> <br>
+                            <select id="country_input"></select>
+                        </td>
+                        <script src="country.js"></script>
+
+                        <td>
+                            <label for="address">Адрес:</label> <br>
+                            <input id="address" onchange="checkInfo()"></input>
+                        </td>
+                    </tr>
+                </table> <br>
+
+                <label for="password">Пароль:</label> <br>
+                <input id="password" onchange="checkInfo()"></input> <br>
+
+                <label for="copy_password">Повторите пароль:</label> <br>
+                <input id="copy_password" onchange="checkInfo()"></input> <br><br>
+
+                <div>
+                    <button onclick="clearInputs()">Отмена</button>
+                    <button id="password_frame_button" onclick="checkPassword()" disabled>Далее</button>
+                </div>
+            </section>
+
+            <section id="frame_3" style="display: none;">
+                <h3>Шаг 2. Телефонный номер</h3>
+                <div>
+                    <p>
+                        В целях безопасности Сервису нужно подтверждение вашего
+                        телефонного номера. На ваш номер будет отправлен 4-значный код
+                        подтверждения.
+                    </p>
+                </div>
+
+                <div>
+                    <input id="phone_number" placeholder="+_(___)___-__-__"></input>
+                    <button onclick="checkPhone()">Отправить</button>
+                </div> <br>
+
+                <div id="phone_code" style="display: hidden; opacity: 0"> 
+                    <label for="code">Код подтверждения:</label> <br>
+                    <input id="code" placeholder="XXXX"></input> 
+                    <button onclick="checkCode()">Проверить</button>
+                </div> <br>
+
+                <div>
+                    <button onclick="pastWindow()">Назад</button>
+                    <button id="phone_frame_button" onclick="nextWindow()" disabled>Далее</button>
+                </div>
+            </section>
+
+            <section id="frame_4" style="display: none;">
+                <h3>Шаг 3. Метод оплаты</h3>
+                <div>
+                    <p>
+                        Для совершения покупок в Сервисе необходимо
+                        подключить баковскую карту.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="card_input">Номер карты:</label>
+                    <div id="card_input" class="input_number">
+                        <input type="text" maxlength="4" size="4" onchange="ckeckCard()">
+                        <input type="text" maxlength="4" size="4" onchange="ckeckCard()">
+                        <input type="text" maxlength="4" size="4" onchange="ckeckCard()">
+                        <input type="text" maxlength="4" size="4" onchange="ckeckCard()">
+                    </div>
+                    <script>
+                        document.querySelectorAll(".input_number input").forEach((input, index, inputs) => {
+                            input.addEventListener("input", () => {
+
+                                if (input.value.length === input.maxLength) {
+                                    if (index < inputs.length - 1) {
+                                        inputs[index + 1].focus();
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="period">Срок действия:</label> <br>
+                                <input id="period" onchange="ckeckCard()" placeholder="OO/OO"></input>
+                            </td>
+
+                            <td>
+                                <label for="cvv">CVV:</label> <br>
+                                <input id="cvv" onchange="ckeckCard()" placeholder="XXX"></input>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <label>
+                        <input id="agreement" type="checkbox" onchange="ckeckCard()">
+                        Я согласен с любыми условиями
+                    </label>
+                </div> <br>
+
+                <div>
+                    <button onclick="pastWindow()">Назад</button>
+                    <button id="card_frame_button" onclick="nextWindow()" disabled>Завершить</button>
+                </div>
+            </section>
+
+            <section id="frame_5" style="display: none;">
+                <h1>Регистрация завершена</h1>
+            </section>
+        </div> <br>
+        
+        <div>
+            <div style=" width: 250px; background-color: #cfcfcf; border-radius: 10px;">
+                <div id="authorization_progress" style="width: 0%; height: 15px; 
+                         background-color: #5987c4; border-radius: 10px;"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let sectionList = document.querySelectorAll("section:not(#loader)");
+        let authorization = document.getElementById("authorization_progress");
+        let sectionNumber = 0;
+        let progressNumber = -33;
+
+        function nextWindow() {
+            sectionList[sectionNumber].style.display = "none";
+            sectionNumber++;
+            sectionList[sectionNumber].style.display = "block";
+
+            progressNumber += 33;
+            authorization.style.width = `${progressNumber}%`;
+            if (progressNumber == 99) {
+                authorization.style.display = "none";
+            }
+        }
+
+        function pastWindow() {
+            sectionList[sectionNumber].style.display = "none";
+            sectionNumber--;
+            sectionList[sectionNumber].style.display = "block";
+
+            progressNumber -= 33;
+            authorization.style.width = `${progressNumber}%`;
+        }
+
+
+        //2
+        let passwordFrame = document.getElementById("frame_2");
+        let passwordFrameInputs = Array.from(passwordFrame.querySelectorAll("input"));
+        let passwordButton = document.getElementById("password_frame_button");
+
+        function checkInfo() {
+            let isNullInput = passwordFrameInputs.every(input => input.value != "");
+            passwordButton.disabled = !isNullInput;
+        }
+
+        function clearInputs() {
+            passwordFrameInputs.forEach(element => {
+                element.value = "";
+            });
+            check(passwordFrameInputs, passwordButton);
+        }
+
+        let password = document.getElementById("password");
+        let copyPassword = document.getElementById("copy_password");
+
+        function checkPassword() {
+            if (password.value == copyPassword.value){
+                nextWindow();
+            } else {
+                copyPassword.value = "Пароли не совпадают";
+            }
+        }
+
+        //3
+        let phoneButton = document.getElementById("phone_frame_button");
+
+        let phone = document.getElementById("phone_number");
+        let phoneCode = document.getElementById("phone_code");
+        let code = document.getElementById("code");
+        
+        function checkPhone() {
+            if (/^\+\d{1}\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(phone.value)){
+                phoneCode.style.opacity = 1;
+            }
+        }
+
+        function checkCode() {
+            let isCodeTrue = Number(code.value) >= 1000 && Number(code.value) <= 9999;
+            phoneButton.disabled = !isCodeTrue;
+        }
+
+        //4
+        let cardInputs = Array.from(document.querySelectorAll("#card_input input"));
+        let period = document.getElementById("period");
+        let cvv = document.getElementById("cvv");
+        let agreement = document.getElementById("agreement");
+        let finishButton = document.getElementById("card_frame_button");
+
+        function ckeckCard() {
+            let isCardValid = cardInputs.every(input => input.value.length === 4);
+            let isPeriodValid = period.value.trim().length >= 5;
+            let isCvvValid = cvv.value.trim().length === 3;
+            let isAgreed = agreement.checked;
+
+            finishButton.disabled = !(isCardValid && isPeriodValid && isCvvValid && isAgreed);
+        }
+    </script>
+</body>
+</html>

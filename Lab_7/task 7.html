@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .line {
+            position: absolute;
+            left: 1%;
+
+            height: 25px;
+            width: 270px;
+
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h3>Горизонтальные линии</h3>
+    <div>Выберите значение параметров, которые требуется изменить, и нажмите кнопку <b>Выполнить</b>.</div><br>
+   
+    <div class="line"></div><br>
+    <table border="1" style="margin-top: 25px"> 
+        <tr>
+            <td>
+                <div>Выравнивание</div>
+                <input type="radio" name="position" value="left" checked> LEFT<br>
+                <input type="radio" name="position" value="center"> CENTER<br>
+                <input type="radio" name="position" value="right"> RIGHT<br>
+  
+                <div><input id="size"></input> толщина линии (size)</div>
+                <div><input id="width"></input> длина линии (width)</div>
+            </td>
+            <td>
+                <div>Цвет линии (color)</div>
+                <select id="color">
+                    <option value="red">red</option>
+                    <option value="blue">blue</option>
+                    <option value="green">green</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <br>
+
+    <button onclick="changeLineClass()">Выполнить</button>
+
+    <script>
+        
+        let inputSize = document.getElementById("size");
+        let inputWidth = document.getElementById("width");
+        let inputColor = document.getElementById("color");
+        
+        let table = document.querySelector("table");
+        let classLine = document.querySelector(".line");
+
+        function changeLineClass() {
+
+            let inputPosition = document.querySelector('[name="position"]:checked');
+            let classText = "position: absolute;";
+
+            if (inputPosition.value == "left") {
+                classText += " left: 1%; right: auto;";
+
+            } else if (inputPosition.value == "center") {
+                classText += " left: 50%; right: auto;";
+
+            } else {
+                classText += " right: 1%; left: auto;";
+            }
+
+            table.style = `margin-top: ${inputSize.value}px`;
+            classText += ` height: ${inputSize.value}px; width: ${inputWidth.value}px;` +
+                         ` background-color: ${inputColor.value};`;
+
+            classLine.style.cssText = classText;
+        }
+    </script>
+</body>
+</html>
