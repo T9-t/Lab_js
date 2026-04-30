@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .centerPosition {
+            flex-direction: column; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="centerPosition" id="main_page">
+        <p>Добро пожаловать, ваше новое имя 
+            <span id=name style="color:blue;"></span>
+        </p>
+        <button onclick="hide()">Продолжить</button> <br>
+        <button onclick="newName()">Другое имя</button>
+    </div>
+
+    <div style="display: none;" id="choice_page">
+        <p>Какое животное выберете</p>
+        <button onclick="setAnimal('cat')">Коты</button> <br>
+        <button onclick="setAnimal('dog')">Собаки</button> <br>
+        <button onclick="setAnimal('fox')">Лисы</button>
+    </div>
+
+    <div style="display: none;" id="animal_page">
+        <img id="animal_img" referrerpolicy=“no-referrer”>
+        <p id="animal_text"></p>
+    </div>
+    
+    
+    <script>
+        function proxyFetch(url) {
+            const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+            return fetch(proxyUrl + url);
+        }
+
+        let url_name = "https://api.randomdatatools.com/";
+        let nameParams = "?params=LastName,FirstName";
+
+        let name = document.getElementById("name");
+        newName();
+        
+        function newName() {
+            proxyFetch(url_name + nameParams)
+                .then(response => response.json())
+                .then(data => {
+                    name.textContent = `${data.FirstName} ${data.LastName}`;
+                });
+        }
+
+        let mainPage = document.getElementById("main_page");
+        let choicePage = document.getElementById("choice_page");
+        
+        function hide() {
+            mainPage.style.display = "none";
+            choicePage.style.display = "flex";
+            choicePage.classList.add("centerPosition");
+        }
+
+        let animalPage = document.getElementById("animal_page");
+        let animalImg = document.getElementById("animal_img");
+        let animalText = document.getElementById("animal_text");
+
+        function setAnimal(animalName) {
+            choicePage.style.display = "none";
+            animalPage.style.display = "flex";
+            animalPage.classList.add("centerPosition");
+
+            proxyFetch("https://some-random-api.com/animal/" + animalName)
+                .then(response => response.json())
+                .then(data => {
+                    animalImg.src = data.image;
+                    animalText.textContent = data.fact;
+                });
+        }
+    </script>
+</body>
+</html>

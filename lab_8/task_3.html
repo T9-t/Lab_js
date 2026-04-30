@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>Список пользователей</h2>
+        <div>
+            <button onclick="loadData()">Загрузить данные</button>
+            <button onclick="deleteSelected()">Удалить отмеченные</button>
+        </div> <br>
+
+        <div>
+            Фильтр: 
+            <select id="genderFilter" onchange="updateTable()">
+                <option value="all">Все</option>
+                <option value="man">Мужчины</option>
+                <option value="woman">Женщины</option>
+            </select>
+        </div> <br>
+    
+        <table border="1" id="humanTable">
+            <thead>
+                <tr>
+                    <th>выбрать</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Возраст</th>
+                    <th>Пол</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    
+        <h4>Добавить запись вручную</h4>
+        <div>
+            <input id="first_name" placeholder="Имя">
+            <input id="last_name" placeholder="Фамилия">
+            <input type="number" id="age" placeholder="Возраст">
+
+            <select id="gender">
+                <option value="man">Мужской</option>
+                <option value="woman">Женский</option>
+            </select>
+        </div> <br>   
+        
+        <input id="address" placeholder="Адрес">
+        <input id="phone" placeholder="Телефон">
+        
+        <button onclick="setHuman()">Добавить в таблицу</button>
+    </div>
+    
+    <script src="humansData.js"></script>
+    <script>
+        let humans = [];
+
+        let tableBody = document.getElementById("tableBody");
+        let filter = document.getElementById("genderFilter");
+
+        function updateTable() {
+            tableBody.innerHTML = "";
+            let displayData = humans;
+
+            if (filter.value != "all") {
+                displayData = humans.filter(human => human.gender == filter.value);
+            }
+
+            displayData.forEach(human => {
+                let tr = document.createElement("tr");
+            
+                if (human.age < 18) {
+                    tr.style.backgroundColor = "#c8e6c9";
+                } else if (human.age > 60) {
+                    tr.style.backgroundColor = "#ffcdd2";
+                } else {
+                    tr.style.backgroundColor = "#fff9c4";
+                }
+
+                tr.innerHTML = `
+                    <td><input type="checkbox" class="sel" data-id="${human.id}"></td>
+                    <td contenteditable="true" onblur="change(${human.id}, 'firstName', this.innerText)">${human.firstName}</td>
+                    <td contenteditable="true" onblur="change(${human.id}, 'lastName', this.innerText)">${human.lastName}</td>
+                    <td contenteditable="true" onblur="change(${human.id}, 'age', this.innerText)">${human.age}</td>
+                    <td>${human.gender}</td>
+                    <td contenteditable="true" onblur="change(${human.id}, 'address', this.innerText)">${human.address}</td>
+                    <td contenteditable="true" onblur="change(${human.id}, 'phone', this.innerText)">${human.phone}</td>
+                    <td><button onclick="deleteOne('${human.id}')">Удалить</button></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        async function loadData() {
+            humans = await getData();
+            updateTable();
+        }
+
+        function deleteOne(deleteId) {
+            humans = humans.filter(human => human.id != deleteId);
+            updateTable();
+        }
+
+        function change(id, field, value) {
+            let human = humans.find(human => human.id == id);
+
+            if (human) {
+                if (field == "age") {
+                    human[field] = Number(value);
+                    updateTable();
+                } else {
+                    human[field] = value;
+                }
+            }
+        }
+
+        function deleteSelected() {
+            let deleteId = Array.from(document.querySelectorAll('.sel:checked'))
+                                .map(i => i.dataset.id);
+
+            humans = humans.filter(human => !deleteId.includes(String(human.id)));
+            updateTable();
+        }
+
+        function setHuman() {
+            let newHuman = {
+                id: Date.now(),
+                firstName: document.getElementById("first_name").value,
+                lastName: document.getElementById("last_name").value,
+                age: Number(document.getElementById("age").value),
+                gender: document.getElementById("gender").value,
+                address: document.getElementById("address").value,
+                phone: document.getElementById("phone").value
+            };
+            humans.push(newHuman);
+            updateTable();
+        }
+    </script>
+</body>
+</html>
